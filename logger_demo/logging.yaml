@@ -1,0 +1,35 @@
+version: 1
+formatters:
+  simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+  rotating_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: simple
+    filename: test.log
+    mode: w
+    maxBytes: 1000
+    backupCount: 3
+    encoding: utf-8
+  timed_rotating_file_handler:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: DEBUG
+    formatter: simple
+    filename: test_time_rotate.log
+    when: S
+    interval: 2
+    backupCount: 10
+loggers:
+  simpleExample:
+    level: DEBUG
+    handlers: [rotating_file_handler,timed_rotating_file_handler]
+    propagate: no
+root:
+  level: DEBUG
+  handlers: [console]
